@@ -1,3 +1,4 @@
+<!-- Tambah Data Mahasiswa -->
 @extends('partial.master')
 
 @section('judul','tambah-mahasiswa')

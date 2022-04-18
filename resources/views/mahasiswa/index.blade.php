@@ -1,4 +1,5 @@
-   @extends('partial.master')
+<!-- Index/Hoome < Mahasiswa > -->
+  @extends('partial.master')
 
    @section('judul','Data-mahasiswa')
 

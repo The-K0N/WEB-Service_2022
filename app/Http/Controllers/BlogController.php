@@ -53,14 +53,16 @@ class BlogController extends Controller
             'body' => 'required|min:5',
             'keyword' => 'required|min:5'
         ];
-        // validasi id untuk id agar tidak sama dengan id yg lain(unique)
 
+        // validasi untuk id agar berbeda dengan id yg lain (unique)
         if ($request->id != $data->id) {
             $blogValid['id'] = 'required|unique:blog';
         }
         $validatedData = $request->validate($blogValid);
+
         // end validasi blog
         $data->update($request->all());
+
         // redirect
         return redirect(url('data-blog'));
         // dd($request->all());

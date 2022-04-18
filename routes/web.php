@@ -29,7 +29,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('portofolio');
 // })->name('tentang-saya');
 
-// Route Potfolio
+
+// Route My Portfolio
 Route::get('/', [ProfileController::class, 'index']);
 
 // Route untuk Praktikum 
