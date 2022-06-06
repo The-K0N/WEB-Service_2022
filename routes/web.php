@@ -48,3 +48,11 @@ Route::post('save-blog',[BlogController::class, 'ambilData'])->name('blog.save-b
 Route::delete('delete-blog/{id}', [BlogController::class, 'destroy'])->name('delete.blog');
 Route::get('edit-blog/{id}/edit', [BlogController::class, 'edit'])->name('edit.blog');
 Route::put('edit-blog/{id}', [BlogController::class, 'update'])->name('update.blog');
+
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
