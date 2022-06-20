@@ -1,7 +1,17 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ProductController;
+use App\Models\Customer;
+use App\Models\Categorie;
+use App\Models\Product;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // untuk tabel customer tanpa penggunaan resource
-Route::get('v1/customer', [CustomerController::class, 'index']);
+Route::get('v1/customer', [CustomerController::class,'index']);
 Route::get('v1/customer/{id}', [CustomerController::class, 'show']);
 Route::post('v1/customer', [CustomerController::class, 'store']);
 Route::put('v1/customer/{id}', [CustomerController::class, 'update']);
