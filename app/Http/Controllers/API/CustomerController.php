@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Categorie;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Validator;
 
-class CategorieController extends Controller
+class CustomerController extends Controller
 {
-        // tampil
+    // tampil
     public function index()
     {
-        $datas = Categorie::all();
+        $datas = Customer::all();
         return response()->json([
             'pesan' => 'Data Berhasil Ditemukan',
             'data' => $datas
@@ -20,7 +21,7 @@ class CategorieController extends Controller
     // tampil berdasarkan id
     public function show($id)
     {
-        $data = Categorie::find($id);
+        $data = Customer::find($id);
         if (empty($data)) {
             return response()->json(['pesan' => 'Data Tidak ditemukan', 'data' => ''], 404);
         }
@@ -30,43 +31,57 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
         $validasi = Validator::make($request->all(), [
-            'id' => 'required|numeric|unique:categori',
+            'id' => 'required|unique:customer',
             'name' => 'required',
-
+            'phone' => 'required',
+            'email' => 'required',
+            'address' => 'required'
         ]);
         if ($validasi->fails()) {
             return response()->json(['pesan' => 'data gagal ditambahkan', 'data' => $validasi->errors()->all()], 404);
         }
-        $data = Categorie::create($request->all());
+        $data = Customer::create($request->all());
         return response()->json(['pesan' => 'data berhasil ditambahkan', 'data' => $data], 200);
     }
     // update
     public function update(Request $request, $id)
     {
-        $category = Categorie::find($id);
-        if (empty($category)) {
+        $customers = Customer::find($id);
+        if (empty($customers)) {
             return response()->json(['pesan' => 'data tidak ditemukan', 'data' => ''], 404);
         } else {
             $validasi = Validator::make($request->all(), [
-                'id' => 'required|numeric|unique:categori',
                 'name' => 'required',
-
+                'phone' => 'required',
+                'email' => 'required',
+                'address' => 'required'
             ]);
-            if ($validasi->fails()) {
+            // menambahkan validasi jika request->id dikirimkan tidak sama dengan customers->id
+            if ($request->id != $customers->id) {
+                $validasi['id'] = 'required|numeric|unique:customer';
+            }
+             else if ($validasi->fails()) {
                 return response()->json(['pesan' => 'Data Gagal diUpdate', 'data' => $validasi->errors()->all()], 404);
             }
-            $category->update($request->all());
-            return response()->json(['pesan' => 'Data Berhasil disimpan', 'data' => $category], 200);
+            $customers->update($request->all());
+            return response()->json(['pesan' => 'Data Berhasil disimpan', 'data' => $customers], 200);
         }
     }
     // Hapus
     public function destroy($id)
     {
-        $category = Categorie::find($id);
-        if (empty($category)) {
+        $customer = Customer::find($id);
+        if (empty($customer)) {
             return response()->json(['pesan' => 'Data Tidak ditemukan', 'data' => ''], 404);
         }
-        $category->delete();
-        return response()->json(['pesan' => 'Data Berhasil dihapus', 'data' => $category]);
+        $customer->delete();
+        return response()->json(['pesan' => 'Data Berhasil dihapus', 'data' => $customer]);
+    }
+
+    // tes relasi
+    public function indexRelasi(){
+        $customer = Customer::with('order')->get();
+        return response()->json(['pesan' => 'Data Berhasil ditemukan', 'data' => $customer],200);
     }
 }
+
